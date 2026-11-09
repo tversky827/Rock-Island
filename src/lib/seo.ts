@@ -20,7 +20,7 @@ export function pageMetadata({
       images: [{ url: image ?? "/opengraph-image", width: 1200, height: 630, alt: site.name }],
     },
     twitter: { card: "summary_large_image", title: `${title} | ${site.name}`, description },
-    robots: noindex ? { index: false, follow: true } : undefined,
+    robots: noindex || process.env.NEXT_PUBLIC_NOINDEX === "true" ? { index: false, follow: !process.env.NEXT_PUBLIC_NOINDEX } : undefined,
   };
 }
 

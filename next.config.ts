@@ -16,7 +16,9 @@ const nextConfig: NextConfig = {
     remotePatterns: [],
   },
   async headers() {
-    return [{ source: "/:path*", headers: securityHeaders }];
+    // On staging/preview (NEXT_PUBLIC_NOINDEX=true), tell search engines not to index anything.
+    const noindex = process.env.NEXT_PUBLIC_NOINDEX === "true" ? [{ key: "X-Robots-Tag", value: "noindex, nofollow" }] : [];
+    return [{ source: "/:path*", headers: [...securityHeaders, ...noindex] }];
   },
 };
 
